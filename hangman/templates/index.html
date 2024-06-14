@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Hangman!</h1>
+        <div class="button-container">
+            <form action="{{ url_for('clear_high_scores') }}" method="post">
+                <button type="submit" class="clear-button">Clear High Scores</button>
+            </form>
+            <form action="{{ url_for('start') }}" method="post">
+                <button type="submit">Start Game</button>
+            </form>
+        </div>
+        <h2 style="text-align: center;">High Scores</h2>
+        <ul style="font-size: 24px;" class="high-scores">
+            {% for score in high_scores %}
+            <li>{{ score.name }}: {{ score.score }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

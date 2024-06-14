@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">Hangman</h1>
+        <div class="word-container">
+            {% for letter in word %}
+            <span>{{ letter }}</span>
+            {% endfor %}
+        </div>
+        <div class="game-info">
+            <p>Guesses: {{ guesses }}</p>
+            <p>Wrong guesses: {{ wrong_guesses }}</p>
+        </div>
+        {% if game_over %}
+            {% if won %}
+            <h2>Congratulations! You won!</h2>
+            <form action="{{ url_for('end') }}" method="post" class="form-container">
+                <label for="name">Your name:</label>
+                <input type="text" id="name" name="name" required>
+                <button type="submit">Save Score</button>
+            </form>
+            {% else %}
+            <h2>Game Over! The word was: {{ session.word }}</h2>
+            <form action="{{ url_for('end') }}" method="post" class="form-container">
+                <button type="submit">Try Again</button>
+            </form>
+            {% endif %}
+        {% else %}
+        <form action="{{ url_for('guess') }}" method="post" class="form-container">
+            <label for="guess">Your guess:</label>
+            <input type="text" id="guess" name="guess" maxlength="1" required>
+            <button type="submit">Guess</button>
+        </form>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById("guess").focus();
+    </script>
+</body>
+</html>
